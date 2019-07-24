@@ -19,9 +19,10 @@ $request_array = json_decode($request, true);   // Decode JSON to Array
 file_put_contents ( 'test.log' , "11\r\n" );
 
 if ( sizeof($request_array['events']) > 0 ) {
-    file_put_contents ( 'test.log' , "22\r\n" );
+
     foreach ($request_array['events'] as $event) {
 
+        file_put_contents ( 'test.log' , "event: ". var_dump($event) ."\r\n" );
         $reply_message = '';
         $reply_token = $event['replyToken'];
 
@@ -33,8 +34,10 @@ if ( sizeof($request_array['events']) > 0 ) {
         ];
         $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
 
+        file_put_contents ( 'test.log' , "44\r\n" );
         $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
 
+        file_put_contents ( 'test.log' , "Result: ".$send_result."\r\n" );
         echo "Result: ".$send_result."\r\n";
         file_put_contents ( 'test.log' , "Result: ".$send_result."\r\n" );
     }
@@ -47,6 +50,7 @@ echo "OK";
 
 function send_reply_message($url, $post_header, $post_body)
 {
+  file_put_contents ( 'test.log' , "send_reply\r\n" );
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
