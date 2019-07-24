@@ -16,10 +16,10 @@ $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' 
 $request = file_get_contents('php://input');   // Get request content
 $request_array = json_decode($request, true);   // Decode JSON to Array
 
-
+file_put_contents ( 'test.log' , "11\r\n" );
 
 if ( sizeof($request_array['events']) > 0 ) {
-
+    file_put_contents ( 'test.log' , "22\r\n" );
     foreach ($request_array['events'] as $event) {
 
         $reply_message = '';
