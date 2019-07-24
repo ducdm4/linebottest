@@ -2,13 +2,13 @@
 
 file_put_contents ( 'test.log' , "00\r\n" );
 $API_URL = 'https://api.line.me/v2/bot/message';
-// $ACCESS_TOKEN = 'fjCRT6Op0+MIL/3yjAsVF23JbeczZ0ca9PZ2Za4GL0hWq+Vgc/igm5NDu/2MXRZYJuJReTZ46oeoeazkKBdrb3QMi/MU34p922AylnsMun0mNKDUu05+o48feg6dV0dLRIKO5kN3fbDKeiCLvet7TgdB04t89/1O/w1cDnyilFU=';
-// $channelSecret = '05d6cf61c27fa17388251fbed964a974';
+$ACCESS_TOKEN = 'fjCRT6Op0+MIL/3yjAsVF23JbeczZ0ca9PZ2Za4GL0hWq+Vgc/igm5NDu/2MXRZYJuJReTZ46oeoeazkKBdrb3QMi/MU34p922AylnsMun0mNKDUu05+o48feg6dV0dLRIKO5kN3fbDKeiCLvet7TgdB04t89/1O/w1cDnyilFU=';
+$channelSecret = '05d6cf61c27fa17388251fbed964a974';
 
 
 //test
-$ACCESS_TOKEN = '3h/+CibBjUgztlMsKBtljzJVfRtjFtCywPZ0xgLIYmMAAgDVnejEaSShJvE38RxKYu3fnImqeE4Kfxiw4Lpkaik/5QdGbLkXedSgMiVxu/yWfj3rD4R+EUHObk359e5r5zmIkh7Ijvv+ZOUV5SliBwdB04t89/1O/w1cDnyilFU=';
-$channelSecret = '6f1b88ae2d2df33d5c73cd1a69bc3b3e';
+// $ACCESS_TOKEN = '3h/+CibBjUgztlMsKBtljzJVfRtjFtCywPZ0xgLIYmMAAgDVnejEaSShJvE38RxKYu3fnImqeE4Kfxiw4Lpkaik/5QdGbLkXedSgMiVxu/yWfj3rD4R+EUHObk359e5r5zmIkh7Ijvv+ZOUV5SliBwdB04t89/1O/w1cDnyilFU=';
+// $channelSecret = '6f1b88ae2d2df33d5c73cd1a69bc3b3e';
 
 
 $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' . $ACCESS_TOKEN);
@@ -16,17 +16,13 @@ $POST_HEADER = array('Content-Type: application/json', 'Authorization: Bearer ' 
 $request = file_get_contents('php://input');   // Get request content
 $request_array = json_decode($request, true);   // Decode JSON to Array
 
-file_put_contents ( 'test.log' , "11: ".$request_array."\r\n" );
-
 if ( sizeof($request_array['events']) > 0 ) {
 
     foreach ($request_array['events'] as $event) {
 
-        file_put_contents ( 'test.log' , "event: ". var_dump($event) ."\r\n" );
         $reply_message = '';
         $reply_token = $event['replyToken'];
 
-        file_put_contents ( 'test.log' , "event: ". var_dump($reply_token) ."\r\n" );
         $text = $event['message']['text'];
         $data = [
             'replyToken' => $reply_token,
@@ -35,11 +31,9 @@ if ( sizeof($request_array['events']) > 0 ) {
         ];
         $post_body = json_encode($data, JSON_UNESCAPED_UNICODE);
 
-        file_put_contents ( 'test.log' , "44\r\n" );
         $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
 
         echo "Result: ".$send_result."\r\n";
-        file_put_contents ( 'test.log' , "Result: ".$send_result."\r\n" );
     }
 }
 
@@ -50,7 +44,6 @@ echo "OK";
 
 function send_reply_message($url, $post_header, $post_body)
 {
-  file_put_contents ( 'test.log' , "send_reply\r\n" );
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
