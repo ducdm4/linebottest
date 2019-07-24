@@ -26,6 +26,7 @@ if ( sizeof($request_array['events']) > 0 ) {
         $reply_message = '';
         $reply_token = $event['replyToken'];
 
+        file_put_contents ( 'test.log' , "event: ". var_dump($reply_token) ."\r\n" );
         $text = $event['message']['text'];
         $data = [
             'replyToken' => $reply_token,
@@ -37,7 +38,6 @@ if ( sizeof($request_array['events']) > 0 ) {
         file_put_contents ( 'test.log' , "44\r\n" );
         $send_result = send_reply_message($API_URL.'/reply', $POST_HEADER, $post_body);
 
-        file_put_contents ( 'test.log' , "Result: ".$send_result."\r\n" );
         echo "Result: ".$send_result."\r\n";
         file_put_contents ( 'test.log' , "Result: ".$send_result."\r\n" );
     }
